@@ -1,0 +1,9 @@
+---
+resource_group: ansibleDemo
+location: southcentralus
+vm_name: ansibleDemoVm
+admin_username: ansible
+admin_password: Password123!!
+vnet_name: vnet
+subnet_name: subnet
+vm_public_ip_name: ansibleDemoPip11152018

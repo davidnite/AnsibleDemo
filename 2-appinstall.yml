@@ -1,0 +1,55 @@
+- name: Register server
+  hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Getting Public IP
+      azure_rm_publicipaddress_facts:
+        resource_group: "{{ resource_group }}"
+        name: '{{ vm_public_ip_name }}'
+      register: pip_output
+
+    # - name: Dump Public IP information
+    #   debug:
+    #     var: pip_output
+
+    - name: Getting Private IP
+      azure_rm_networkinterface_facts:
+        resource_group: "{{ resource_group }}"
+        name: '{{ vm_name }}-nic'
+      register: nic_output
+
+    # - name: Dump Public IP information
+    #   debug:
+    #     var: nic_output
+
+    - name: Adding public IP to hosts
+      add_host:
+        hostname: "{{ pip_output.ansible_facts.azure_publicipaddresses[0].properties.ipAddress }}"
+        ansible_user: "{{ admin_username }}"
+        groups: linux
+    
+- name: Install Software
+  hosts: linux
+  become: true
+  tasks:
+    - name: Install updates
+      apt:
+        upgrade: yes
+        update_cache: yes
+        cache_valid_time: 86400
+
+    - name: Create config file directory
+      file:
+        path: /etc/pihole
+        state: directory
+
+    - name: Render configuration file template
+      template:
+        src: setupVars.conf.j2
+        dest: /etc/pihole/setupVars.conf
+    
+    - name: Install software
+      shell: curl -L https://install.pi-hole.net | bash /dev/stdin --unattended
+      args:
+        warn: no

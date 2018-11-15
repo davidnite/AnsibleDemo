@@ -9,7 +9,9 @@
         pip install --upgrade pip
         pip install ansible==2.7.0rc2
         pip install ansible[azure]
-3. Setup authentication (https://docs.ansible.com/ansible/2.6/scenario_guides/guide_azure.html)
+3. Generate SSH keys
+    ```ssh-keygen -t rsa -q -P "" -f $HOME/.ssh/id_rsa
+4. Setup Azure authentication (https://docs.ansible.com/ansible/2.6/scenario_guides/guide_azure.html)
 
 ## Run the playbooks
  

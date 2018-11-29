@@ -6,4 +6,4 @@ admin_username: ansible
 admin_password: Password123!!
 vnet_name: vnet
 subnet_name: subnet
-vm_public_ip_name: ansibleDemoPip11152018
+vm_public_ip_name: ansibledemo11152018

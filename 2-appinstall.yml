@@ -19,7 +19,7 @@
         name: '{{ vm_name }}-nic'
       register: nic_output
 
-    # - name: Dump Public IP information
+    # - name: Dump Private IP information
     #   debug:
     #     var: nic_output
 
@@ -33,11 +33,11 @@
   hosts: linux
   become: true
   tasks:
-    - name: Install updates
-      apt:
-        upgrade: yes
-        update_cache: yes
-        cache_valid_time: 86400
+    # - name: Install updates
+    #   apt:
+    #     upgrade: yes
+    #     update_cache: yes
+    #     cache_valid_time: 86400
 
     - name: Create config file directory
       file:
